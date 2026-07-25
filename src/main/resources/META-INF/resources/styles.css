@@ -1,1 +1,46 @@
 /* Add your styles here */
+
+/*
+ * Booked date cells in the DatePicker calendar.
+ *
+ * The part names ("half" / "full") come from the DatePartNameGenerator set in
+ * HomeView. They are added to the `part` attribute of each day cell inside the
+ * vaadin-month-calendar shadow DOM (e.g. part="date past half"), so they are
+ * styled with ::part() on vaadin-month-calendar.
+ */
+
+/* Half-booked days: an opaque two-tone amber tile acting as a "half full" meter
+   (deeper amber on the bottom, lighter amber on top). Kept fully opaque so the
+   calendar's blue selected/focused highlight can't bleed through the fill. */
+vaadin-month-calendar::part(half) {
+    background: linear-gradient(to top,
+        var(--vaadin-warning-color, #e3a233) 50%,
+        #f7e4bd 50%);
+    border-radius: 26%;
+    color: #3a2c05;
+    font-weight: 700;
+}
+
+/* Fully-booked days: solid red rounded tile with a white number. These are also
+   disabled (see setDisabledDatesProvider), so keep opacity at 1 so the booked
+   color shows through the default disabled dimming. */
+vaadin-month-calendar::part(full) {
+    background: var(--vaadin-error-color, #e0392b);
+    border-radius: 26%;
+    color: var(--vaadin-error-contrast-color, #fff);
+    font-weight: 700;
+    opacity: 1;
+}
+
+/* When a booked day is selected, focused or today, don't let the default blue
+   background clash with the booking color — indicate it with a crisp ring
+   drawn inside the tile instead. */
+vaadin-month-calendar::part(half selected),
+vaadin-month-calendar::part(half focused),
+vaadin-month-calendar::part(half today),
+vaadin-month-calendar::part(full selected),
+vaadin-month-calendar::part(full focused),
+vaadin-month-calendar::part(full today) {
+    box-shadow: inset 0 0 0 2px #fff,
+                inset 0 0 0 4px rgba(0, 0, 0, 0.55);
+}

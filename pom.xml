@@ -10,6 +10,8 @@
     <properties>
         <java.version>25</java.version>
         <vaadin.version>25.3-SNAPSHOT</vaadin.version>
+        <flow.components.version>25.3.disable-dates-SNAPSHOT</flow.components.version>
+<!--        <flow.components.version>25.3-SNAPSHOT</flow.components.version>-->
     </properties>
     
     <parent>
@@ -21,6 +23,13 @@
     
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>flow-components-bom</artifactId>
+                <version>${flow.components.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
@@ -76,6 +85,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                <forceProductionBuild>true</forceProductionBuild>
+                </configuration>
             </plugin>
         </plugins>
     </build>
